@@ -1,0 +1,85 @@
+body{
+    background: #2c2c2c;
+}
+h5{
+margin-top:20px;
+margin-bottom:0px;
+}
+.label_parking{
+color:white;
+margin-top:40px;
+margin-bottom:1px;
+}
+img{
+    width: 80px;
+    float: left;
+}
+.logo{
+        font-size: 22px;
+    margin-left: 10px;
+    position: relative;
+}
+ul {list-style: none}
+ ul li {
+    color: #333333;
+         display: block;
+    margin-top: 20px;
+    transition: transform .20s ease;
+     padding-left: 30px;
+       font-size: 18px;
+}
+ ul li:hover, ul a:hover {
+     color: #a41515;
+     text-decoration: none;
+     transform: scale(1.15);
+ }
+ .personal_account{
+     padding-right: 5px;
+ }
+ .parking{
+     color: #fafafa;
+     font-size: 40px;
+ }
+
+  .block{
+      color: #333333;
+    background-color: #17a2b8!important;
+    border-color: #ffeeba;
+      padding-left: 25px;
+      border-radius: 19px;
+      margin-top: 30px;
+      padding-top: 10px;
+ }
+  .adress{
+      padding-bottom: 15px;
+  }
+  .time{
+      padding-bottom: 10px;
+  }
+.numberofavailableseats{
+     padding-bottom: 10px;
+    margin-top: 10px;
+}
+.parking{
+    margin-top: 60px;
+}
+.form-control{
+width: 330px;
+}
+.block_payment{
+      color: #333333;
+    background-color: #17a2b8!important;
+    border-color: #ffeeba;
+      padding-left: 25px;
+      border-radius: 19px;
+      margin-top: 30px;
+      padding-top: 10px;
+      width:420px;
+}
+.number{
+width: 330px;
+margin-bottom:1px;
+}
+.enddif{
+margin-bottom:50px;
+}

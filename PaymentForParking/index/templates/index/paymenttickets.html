@@ -1,0 +1,61 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}
+Страница оплаты абонемента
+{% endblock %}
+{% block content %}
+<form  action="" method="post">
+    {% csrf_token %}
+      <center>
+          <h3 class="label_parking">Оплата абонемента</h3>
+                 <a class="btn btn-info" href="{% url 'payment' %}" role="button">Перейти к оплате парковки</a>
+      {% csrf_token %}
+      <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6">
+ <div class="block_payment">
+            <div class="form-group">
+                <h5>Выберите наименование абонемента</h5>
+    <label for="{{ formtickets.nametickets.id_for_label }}"></label>
+      {{ formtickets.nametickets }}
+      <div class="invalid-feedback">
+      {{ formtickets.nametickets.errors }}
+      </div>
+  </div>
+              <div class="form-group">
+                        <h5>Введите государственный номер</h5>
+    <label for="{{ formtickets.carnumber.id_for_label }}"></label>
+      {{ formtickets.carnumber }}
+      <div class="invalid-feedback">
+      {{ formtickets.carnumber.errors }}
+      </div>
+  </div>
+             <div class="form-group">
+                        <h5>Цена</h5>
+    <label for="{{ formtickets.price.id_for_label }}"></label>
+      {{ formtickets.price }}
+      <div class="invalid-feedback">
+      {{ formtickets.price.errors }}
+      </div>
+  </div>
+                         <div class="form-group">
+                <h5>Введите номер телефона</h5>
+    <label for="{{ formtickets.telephone.id_for_label }}"></label>
+      {{ formtickets.telephone }}
+      <div class="invalid-feedback">
+      {{ formtickets.telephone.errors }}
+      </div>
+  </div>
+                         <button type="submit" class="btn btn-info" id="button">Перейти к оплате</button>
+             </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
+    </div>
+      </center>
+</form>
+{% endblock %}
+{% block js %}
+<script src="{% static 'index/js/paymenttickets.js' %}"></script>
+{% endblock %}

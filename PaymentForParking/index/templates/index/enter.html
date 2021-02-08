@@ -1,0 +1,41 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}
+Страница авторизации
+{% endblock %}
+{% block content %}
+       <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      </div>
+        <div class="col-sm">
+       <div class="parking">
+       <center><h1>Вход в личный кабинет</h1></center>
+        </div>
+        <div class="registration">
+    <form class="form">
+                        <center>
+    <div class="mb-3">
+    <input type="text" placeholder="89152021645" class="form-control" id="phonenumber" aria-describedby="emailHelp">
+  </div>
+  <button type="button" class="btn btn-info" id="buttonsms">Отправить SMS</button><br><br>
+                                <div class="mb-3">
+    <input type="text" class="form-control" id="code" style="opacity:0" placeholder="Введите код из SMS" aria-describedby="emailHelp">
+  </div>
+                            <button type="button" class="btn btn-info" style="opacity:0" id="buttoncode">Войти</button><br><br>
+                    <div id="errorMess" style="color:red"></div>
+  </center><br>
+    <br>
+  </center>
+</form>
+</div>
+     </div>
+     <div class="col-sm">
+
+    </div>
+  </div>
+       </div>
+{% endblock %}
+           {% block js %}
+<script src="{% static 'index/js/avtorization.js' %}"></script>
+{% endblock %}

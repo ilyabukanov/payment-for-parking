@@ -1,0 +1,29 @@
+{% extends 'index/base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+{% block content %}
+      <center><h1 class="parking">Наши парковки</h1></center>
+    {% for item in parking %}
+          <div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6">
+              <div class="block">
+        <div class="adress"><h3>Адрес: {{ item.adress }}</h3></div>
+      <div class="time">
+          <h5>Время работы: {{ item.workinghours }}</h5>
+      </div>
+                  <div class="numberofavailableseats">
+                                 <h5>Количество свободных мест: {{ item.numberofavailableseats }}</h5>
+                  </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
+</div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'index/base.html' %}
+{% block title %}
+Страница тарифов
+{% endblock %}
+{% block content %}
+  <center><h1 class="parking">Тарифы</h1></center>
+ {% for item in parking %}
+          <div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6">
+              <div class="block">
+        <div class="adress"><center><h3>{{ item.adress }}</h3></center></div>
+                  <div class="adress"><h4>Минимальное время: {{ item.minimaltimeforpayment }}</h4></div>
+                  <div class="adress"><h4>Цена: {{ item.price }} руб/час</h4></div>
+                  <center><h3>Абонементы</h3></center>
+                   {% for v in item.tickets.all %}
+                  <div class="adress">
+                          <h4>Количество дней: {{ v.numberofdays }}</h4>
+                  <h4>Время действия: {{ v.time }}</h4>
+                      <h4>Цена: {{ v.price }}</h4>
+                      </div>
+    {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
+</div>
+    {% endfor %}
+{% endblock %}
