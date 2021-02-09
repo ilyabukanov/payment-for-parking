@@ -61,14 +61,19 @@ mkdir PaymentForParking
 sudo python3.9 -m venv env
 
 source env/bin/activate
-
-Установка pip и Django
-
+```
+***
+# Установка pip и Django
+***
+```
 sudo apt-get install -y python3-pip
 pip3 -V
 sudo pip3 install Django
-
-Создание Django проекта:
+```
+***
+# Создание Django проекта:
+***
+```
 django-admin startproject PaymentForParking
 cd PaymentForParking
 
@@ -83,28 +88,28 @@ sudo python3 manage.py runserver 0.0.0.0:8000
 sudo pip3 install gunicorn
 cd /mnt/c/WEB/codepython/PaymentForParking/PaymentForParking
 vim gunicorn_config.py
-command='/mnt/c/WEB/ПП Vidim.Pro/site/code/PaymentForParking/PaymentForParking/env/bin/gunicorn'
-pythonpath='/mnt/c/WEB/ППVidim.Pro/site/code/PaymentForParking/PaymentForParkinPaymentForParking'
+command='/mnt/c/WEB/codepython/PaymentForParking/PaymentForParking/env/bin/gunicorn'
+pythonpath='/mnt/c/WEB/codepython/PaymentForParking/PaymentForParkinPaymentForParking'
 bind = '127.0.0.1:8001'
 workers = 3
 user = 'ilya'
 limit_request_fields = 32000
 limit_request_field_size = 0
 raw_env = 'DJANGO_SETTINGS_MODULE=PaymentForParking.settings'
-
+```
 Фото: https://imgur.com/D77LNv3
-
+```
 cd /mnt/c/WEB/codepython/PaymentForParking
 mkdir bin
 cd bin
 vim start_gunicorn.sh
 
 	#!/bin/bash
-	source /mnt/c/WEB/ПП Vidim.Pro/site/code/PaymentForParking/env/bin/activate
-	exec gunicorn  -c " /mnt/c/WEB/ПП Vidim.Pro/site/code/PaymentForParking/PaymentForParking/gunicorn_config.py" PaymentForParking.wsgi
-
+	source /mnt/c/WEB/codepython/PaymentForParking/env/bin/activate
+	exec gunicorn  -c " /mnt/c/WEB/codepython/PaymentForParking/PaymentForParking/gunicorn_config.py" PaymentForParking.wsgi
+```
 Фото: https://imgur.com/vKv000V
-
+```
 sudo chmod +x start_gunicorn.sh
 
 
@@ -140,19 +145,19 @@ Location / {
                            add_header Access-Control-Allow-Origin *;
                            }
 }
-
+```
 Фото: https://imgur.com/dNLTigS
-
+```
 sudo nginx
 ```
 ***
 # Статика
 ***
-```
+
 Идём в файл settings.py и вставляем в конец файла STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 Импортируем os – import os
-
+```
 python3 manage.py collectstatic
     
 ```
@@ -171,28 +176,35 @@ ALTER ROLE paymentforparkinguser SET default_transaction_isolation TO 'read comm
 ALTER ROLE paymentforparkinguser SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE paymentforparking TO paymentforparkinguser;
 \q
+```
 Sudo nano settings.py:
 Фото: https://imgur.com/m3vWCvM
+```
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 ***
 # Работа с проектом
-
+Для начала необходимо загрузить все необходимые библиотеки 
+```
+pip install -r /mnt/c/WEB/codepython/PaymentForParking/requirements.txt
 ```
 Запуск nginx 
+```
 sudo service nginx start
+```
 Заходим через nginx и в адресной строке браузера вводим localhost
 Фото: https://imgur.com/JjJXLVI
 
 Данная ошибка возникает из-за того, что nginx’y некуда проксировать запросы. Для этого необходимо запустить gunicorn. После этого Nginx будет проксировать запросы на gunicorn 
 Переходим в директорию с bash скриптом 
+```
 cd /mnt/c/WEB/codepython/PaymentForParking/bin
-
+```
 Запускаем gunicorn через bash скрипт 
-
+```
 . ./bin/start_gunicorn.sh
-
+```
 Обновляем страницу в браузере и видим следующую ошибку 
 
 Фото: https://imgur.com/kGYjAsj
@@ -200,7 +212,7 @@ cd /mnt/c/WEB/codepython/PaymentForParking/bin
 Для её решения необходимо запустить PostgreSQL командой sudo service postgresql start
 
 Фото: https://imgur.com/undefined
-```
+
 
 
 
