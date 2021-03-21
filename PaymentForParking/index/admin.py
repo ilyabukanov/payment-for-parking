@@ -15,12 +15,12 @@ class ticketsAdmin(admin.ModelAdmin):
     search_fields = ('nameseasontickets',)
 
 class paidparkingAdmin(admin.ModelAdmin):
-        list_display = ('adress', 'carnumber', 'amountoftime', 'price', 'telephone','datetimepaidparking')
+        list_display = ('adress', 'carnumber', 'amountoftime', 'price', 'telephone','email','startofvalidityperiod','expirationdate','datetimepaidparking')
         list_display_links = ('adress',)
         search_fields = ('carnumber',)
 
 class paidseasonticketsAdmin(admin.ModelAdmin):
-        list_display = ('nametickets','carnumber','price','telephone','datetimepaidtickets')
+        list_display = ('nametickets','carnumber','price','telephone','email','startofvalidityperiod','expirationdate','datetimepaidtickets')
         list_display_links = ('nametickets',)
         search_fields = ('carnumber',)
 
@@ -28,3 +28,5 @@ admin.site.register(Parking, IndexAdmin)
 admin.site.register(tickets, ticketsAdmin)
 admin.site.register(paidparking, paidparkingAdmin)
 admin.site.register(paidseasontickets,paidseasonticketsAdmin)
+admin.site.site_title = 'Управление парковками'
+admin.site.site_header = 'Управление парковками'

@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+import re
 class Parking(models.Model):
     adress = models.CharField(max_length=150, verbose_name='Адрес')
     workinghours = models.CharField(max_length=50, verbose_name='Время работы')
@@ -34,7 +36,10 @@ class paidparking(models.Model):
     amountoftime = models.IntegerField(verbose_name='Количество времени')
     price = models.FloatField(verbose_name='Цена')
     telephone = models.CharField(max_length=20,verbose_name='Номер телефона')
+    email = models.EmailField(verbose_name='Электронный адрес',null=True,blank=True )
     datetimepaidparking = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время оплаты')
+    startofvalidityperiod = models.DateTimeField(null=True,verbose_name='Начало срока действия')
+    expirationdate = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
 
 
     class Meta:
@@ -46,8 +51,10 @@ class paidseasontickets(models.Model):
     carnumber = models.CharField(max_length=150,verbose_name='Номер автомобиля')
     price = models.FloatField(verbose_name='Цена')
     telephone = models.CharField(max_length=20,verbose_name='Номер телефона')
+    email = models.EmailField(verbose_name='Электронный адрес',null=True,blank=True)
     datetimepaidtickets = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время оплаты")
-
+    startofvalidityperiod = models.DateTimeField(null=True,verbose_name='Начало срока действия')
+    expirationdate = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
 
     class Meta:
         verbose_name = 'Оплаченный абонемент'

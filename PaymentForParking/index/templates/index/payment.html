@@ -4,68 +4,102 @@
 Страница оплаты парковки
 {% endblock %}
 {% block content %}
-<form  action="" method="post" name="myForm">
-    {% csrf_token %}
-    {% comment %}
-    {{ form.as_p }}
-    {% endcomment %}
+              <div class="container">
       <center>
-          <h3 class="label_parking">Оплата парковки</h3>
+           <h3 class="label_parking">Оплата парковки</h3>
                  <a class="btn btn-info" href="{% url 'paymenttickets' %}" role="button">Перейти к оплате абонемента</a>
-      {% csrf_token %}
       <div class="row">
     <div class="col-sm-3">
     </div>
     <div class="col-sm-6">
-        <div class="block_payment">
-<h5>Выберите адрес парковки</h5>
-            {{ form.not_field.errors }}
-  <div class="form-group">
+                                                  {% for field in formparking %}
+                                                      {% if field.errors %}
+                                                          <div class="alert alert-danger">
+                                                          {{ field.errors }}
+                                                          </div>
+                                        {% endif %}
+                                                            {% endfor %}
+          <div class="block">
+<form  action="" class="form" method="post" name="myForm">
+      <center>
+      {% csrf_token %}
+                <h5>Адрес парковки
+                                               <div class="form-group">
    <label for="{{ formparking.adress.id_for_label }}" id="select"></label>
       {{ formparking.adress }}
       <div class="invalid-feedback">
       {{ formparking.adress.errors }}
       </div>
-  </div>
-                        <div class="form-group">
-                        <h5>Введите государственный номер</h5>
+                                               </div>
+
+                           <div class="form-group">
+                        <h5>Регистрационный номер автомобиля</h5>
     <label for="{{ formparking.carnumber.id_for_label }}"></label>
       {{ formparking.carnumber }}
       <div class="invalid-feedback">
       {{ formparking.carnumber.errors }}
       </div>
   </div>
-                        <h5>Введите количество времени</h5>
+             <div class="form-group">
+                                  <h5>Количество времени</h5>
     <label for="{{ formparking.amountoftime.id_for_label }}"></label>
       {{ formparking.amountoftime }}
       <div class="invalid-feedback">
       {{ form.amountoftime.errors }}
       </div>
-             <div class="form-group">
-                        <h5>Цена</h5>
+  </div>
+            <div class="form-group">
+                                <h5>Цена</h5>
     <label for="{{ formparking.price.id_for_label }}"></label>
       {{ formparking.price }}
       <div class="invalid-feedback">
       {{ formparking.price.errors }}
       </div>
   </div>
-            <div class="form-group">
-                <h5>Введите номер телефона</h5>
+                                    <div class="form-group">
+                    <h5>Номер телефона</h5>
     <label for="{{ formparking.telephone.id_for_label }}"></label>
       {{ formparking.telephone }}
       <div class="invalid-feedback">
-      {{ formparking.telephone.errors }}
+          <div class="form-error">{{ formparking.telephone.errors }}</div>
       </div>
   </div>
-                        <div id="errorMess"></div>
-           <button type="submit" class="btn btn-info" id="button">Перейти к оплате</button>
+            <div class="form-group">
+                     <h5>Электронный адрес</h5>
+    <label for="{{ formparking.email.id_for_label }}"></label>
+      {{ formparking.email }}
+      <div class="invalid-feedback">
+      {{ formparking.email.errors }}
+      </div>
   </div>
+                        <div class="form-group">
+                    <h5>Начало срока действия</h5>
+      <label for="{{ formparking.startofvalidityperiod.id_for_label }}"></label>
+      {{ formparking.startofvalidityperiod }}
+      <div class="invalid-feedback">
+      {{ formparking.startofvalidityperiod.errors }}
+      </div>
+  </div>
+                              <div class="form-group">
+            <h5>Окончание срока действия</h5>
+      <label for="{{ formparking.expirationdate.id_for_label }}"></label>
+      {{ formparking.expirationdate }}
+      <div class="invalid-feedback">
+      {{ formparking.expirationdate.errors }}
+      </div>
+  </div>
+            <div id="errorMess"></div>
+           <button type="submit" class="btn btn-info" id="button">Перейти к оплате</button>
+        </div>
+    </div>
+     </div>
     <div class="col-sm-3">
     </div>
   </div>
     </div>
       </center>
 </form>
+    </div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'index/js/payment.js' %}"></script>
