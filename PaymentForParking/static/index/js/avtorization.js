@@ -2,7 +2,7 @@ var number
 var code
 var phonenumber
 $("#exit").on("click", function () {
-  document.location.href = "http://localhost/exit"
+  document.location.href = "http://http://10.198.1.8/exit"
 });
 $("#buttonsms").on("click", function () {
 function getRandomInt(min,max){
@@ -46,7 +46,7 @@ code = $("#code").val();
     cache: false,
     success:function (data){
     if(data == "yes"){
-          document.location.href = "http://localhost/personalaccount?number=" + phonenumber;
+          document.location.href = "http://http://10.198.1.8/personalaccount?number=" + phonenumber;
       $("#errorMess").text("");
     }
     }
