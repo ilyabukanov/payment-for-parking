@@ -63,20 +63,28 @@
       {{ formtickets.email.errors }}
       </div>
   </div>
-            <div class="form-group">
-            <h5>Начало срока действия</h5>
-      <label for="{{ formtickets.startofvalidityperiod.id_for_label }}" id="datestart"></label>
-      {{ formtickets.startofvalidityperiod }}
-      <div class="invalid-feedback">
-      {{ formtickets.startofvalidityperiod.errors }}
-      </div>
-  </div>
                         <div class="form-group">
-            <h5>Окончание срока действия</h5>
-      <label for="{{ formtickets.expirationdate.id_for_label }}" id="dateend"></label>
+                    <h5>Дата начала срока действия</h5>
+      <label for="{{ formtickets.expirationdate.id_for_label }}"></label>
       {{ formtickets.expirationdate }}
       <div class="invalid-feedback">
       {{ formtickets.expirationdate.errors }}
+      </div>
+  </div>
+                                                                <div class="form-group">
+                    <h5>Время начала срока действия</h5>
+      <label for="{{ formtickets.expirationtime.id_for_label }}"></label>
+      {{ formtickets.expirationtime }}
+      <div class="invalid-feedback">
+      {{ formtickets.expirationtime.errors }}
+      </div>
+  </div>
+                              <div class="form-group">
+            <h5>Окончание срока действия</h5>
+      <label for="{{ formtickets.enddateandtime.id_for_label }}"></label>
+      {{ formtickets.enddateandtime }}
+      <div class="invalid-feedback">
+      {{ formtickets.enddateandtime.errors }}
       </div>
   </div>
 

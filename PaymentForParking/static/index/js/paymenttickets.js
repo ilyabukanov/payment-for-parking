@@ -1,5 +1,6 @@
 var numberofdays
 $("select").on('change', function(){
+     $("#id_expirationdate").prop("disabled", false);
 var nametickets = $('select option:selected' ).text();
 $.ajax({
     type: "GET",
@@ -12,26 +13,81 @@ $.ajax({
     success:function (nametickets){
         numberofdays = nametickets['numberofdays'];
         $("#id_price").val(nametickets['price']);
-        const datestart = document.getElementById('id_startofvalidityperiod').value;
+        const date = document.getElementById('id_expirationdate').value;
+           const time = document.getElementById('id_expirationtime').value;
+           const datestart = date + 'T' + time;
          let newDate = new Date(datestart);
          const curDateNum = newDate.getDate();
          newDate.setDate(curDateNum + Number(numberofdays));
          let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMonth()+1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0'+newDate.getHours()).slice(-2) + ':' + ('0'+newDate.getMinutes()).slice(-2);
-       if(datestart != "")
-       {
-                    $("#id_expirationdate").val(finalDateStr);
-       }
+       const timee = document.getElementById('id_expirationtime').value;
+                            console.log(timee);
+                          if(date && timee != "")
+                 {
+                          $("#id_enddateandtime").val(finalDateStr);
+                 }
     }
     });
 });
-window.onload = function() {
-    let date = document.getElementById('id_startofvalidityperiod');
-    date.addEventListener('change', function(event) {
-         const datestart = document.getElementById('id_startofvalidityperiod').value;
-         let newDate = new Date(datestart);
-         const curDateNum = newDate.getDate();
+
+$("#id_expirationdate").on('change', function() {
+     $("#id_expirationtime").prop("disabled", false);
+    if (document.getElementById('id_expirationtime').value == "")
+    {
+
+    }
+    else {
+        const date = document.getElementById('id_expirationdate').value;
+        if (date != "") {
+            $("#id_expirationtime").prop("disabled", false);
+        }
+        const time = document.getElementById('id_expirationtime').value;
+        const datetimestart = date + 'T' + time;
+        let newDate = new Date(datetimestart);
+        const curDateNum = newDate.getDate();
+        newDate.setDate(curDateNum + Number(numberofdays));
+        let finalDateStr = ('0' + newDate.getDate()).slice(-2) + '.' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0' + newDate.getHours()).slice(-2) + ':' + ('0' + newDate.getMinutes()).slice(-2);
+        if (date != "") {
+            $("#id_enddateandtime").val(finalDateStr);
+        }
+    }
+});
+$("#id_expirationtime").on('change', function(){
+   const date = document.getElementById('id_expirationdate').value;
+           const time = document.getElementById('id_expirationtime').value;
+           const datetimestart = date + 'T' + time;
+           let newDate = new Date(datetimestart);
+           const curDateNum = newDate.getDate();
          newDate.setDate(curDateNum + Number(numberofdays));
          let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMonth()+1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0'+newDate.getHours()).slice(-2) + ':' + ('0'+newDate.getMinutes()).slice(-2);
-       $("#id_expirationdate").val(finalDateStr);
-    });
+                            const timee = document.getElementById('id_expirationtime').value;
+                            console.log(timee)
+   if(date != "") {
+       $("#id_enddateandtime").val(finalDateStr);
+   }
+});
+$("#button").on("click", function () {
+    const date = document.getElementById('id_expirationdate').value;
+const time = document.getElementById('id_expirationtime').value;
+localStorage.setItem("date",date);
+localStorage.setItem("time",time);
+});
+window.onload = function() {
+    const date = localStorage.getItem("date");
+    const time = localStorage.getItem("time");
+$("#id_expirationdate").val(date);
+$("#id_expirationtime").val(time);
+localStorage.clear();
+alert("fda");
+if(document.getElementById('exampleFormControlSelect1').value !="")
+{
+        $("#id_expirationdate").prop("disabled", false);
 }
+ if (document.getElementById('id_expirationtime').value == "")
+    {
+
+    }
+    else{
+             $("#id_expirationtime").prop("disabled", false);
+ }
+};

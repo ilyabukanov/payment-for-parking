@@ -72,20 +72,29 @@
       {{ formparking.email.errors }}
       </div>
   </div>
-                        <div class="form-group">
-                    <h5>Начало срока действия</h5>
-      <label for="{{ formparking.startofvalidityperiod.id_for_label }}"></label>
-      {{ formparking.startofvalidityperiod }}
-      <div class="invalid-feedback">
-      {{ formparking.startofvalidityperiod.errors }}
-      </div>
-  </div>
-                              <div class="form-group">
-            <h5>Окончание срока действия</h5>
+               <div class="form-group">
+                    <h5>Дата начала срока действия</h5>
       <label for="{{ formparking.expirationdate.id_for_label }}"></label>
       {{ formparking.expirationdate }}
       <div class="invalid-feedback">
       {{ formparking.expirationdate.errors }}
+      </div>
+  </div>
+                                                                                    <div class="form-group">
+                    <h5>Время начала срока действия</h5>
+      <label for="{{ formparking.expirationtime.id_for_label }}"></label>
+      {{ formparking.expirationtime }}
+      <div class="invalid-feedback">
+      {{ formparking.expirationtime.errors }}
+      </div>
+  </div>
+
+                              <div class="form-group">
+            <h5>Окончание срока действия</h5>
+      <label for="{{ formparking.enddateandtime.id_for_label }}"></label>
+      {{ formparking.enddateandtime }}
+      <div class="invalid-feedback">
+      {{ formparking.enddateandtime.errors }}
       </div>
   </div>
             <div id="errorMess"></div>

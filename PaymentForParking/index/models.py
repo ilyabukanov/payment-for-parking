@@ -38,8 +38,9 @@ class paidparking(models.Model):
     telephone = models.CharField(max_length=20,verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Электронный адрес',null=True,blank=True )
     datetimepaidparking = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время оплаты')
-    startofvalidityperiod = models.DateTimeField(null=True,verbose_name='Начало срока действия')
-    expirationdate = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
+    expirationdate = models.DateField(null=True,verbose_name='Дата начала срока действия')
+    expirationtime = models.TimeField(null=True,verbose_name='Время начала срока действия')
+    enddateandtime = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
 
 
     class Meta:
@@ -53,8 +54,9 @@ class paidseasontickets(models.Model):
     telephone = models.CharField(max_length=20,verbose_name='Номер телефона')
     email = models.EmailField(verbose_name='Электронный адрес',null=True,blank=True)
     datetimepaidtickets = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время оплаты")
-    startofvalidityperiod = models.DateTimeField(null=True,verbose_name='Начало срока действия')
-    expirationdate = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
+    expirationdate = models.DateField(null=True,verbose_name='Дата начала срока действия')
+    expirationtime = models.TimeField(null=True,verbose_name='Время начала срока действия')
+    enddateandtime = models.DateTimeField(null=True,blank=True,verbose_name='Окончание срока действия')
 
     class Meta:
         verbose_name = 'Оплаченный абонемент'

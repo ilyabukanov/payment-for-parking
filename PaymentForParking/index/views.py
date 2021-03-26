@@ -38,17 +38,20 @@ def payment(request):
                 adress = formparking.cleaned_data['adress']
                 adress = str(adress)
 
-                startofvalidityperiod = formparking.cleaned_data['startofvalidityperiod']
-                PATTERN_OUT = "%d.%m.%Y. %H:%M"
-                startofvalidityperiod = (datetime.strftime(startofvalidityperiod, PATTERN_OUT))
-                startofvalidityperiod = str(startofvalidityperiod)
-
                 expirationdate = formparking.cleaned_data['expirationdate']
-                PATTERN_OUT = "%d.%m.%Y. %H:%M"
+                PATTERN_OUT = "%d.%m.%Y."
                 expirationdate = (datetime.strftime(expirationdate, PATTERN_OUT))
                 expirationdate = str(expirationdate)
 
-                send_mail('Оплата парковки в системе оплаты парковок', "Вас приветствует система оплаты парковок. Вы оплатили парковку по адресу: " + adress + ". Срок действия начинается с " + startofvalidityperiod + " и заканчивается " + expirationdate,'p_i.d.bukanov@mpt.ru',[formparking.cleaned_data['email']])
+                expirationtime = formparking.cleaned_data['expirationtime']
+                expirationtime = str(expirationtime)
+
+                enddateandtime = formparking.cleaned_data['enddateandtime']
+                PATTERN_OUT = "%d.%m.%Y. %H:%M"
+                enddateandtime = (datetime.strftime(enddateandtime, PATTERN_OUT))
+                enddateandtime = str(enddateandtime)
+
+                send_mail('Оплата парковки в системе оплаты парковок', "Вас приветствует система оплаты парковок. Вы оплатили парковку по адресу: " + adress + ". Срок действия начинается с " + expirationdate + " " + expirationtime + " и заканчивается " + enddateandtime,'p_i.d.bukanov@mpt.ru',[formparking.cleaned_data['email']])
             #form.cleaned_data - словарь, который содержит в себе все поля после отправки формы
             formparking.save()
             return redirect('home')
@@ -82,18 +85,21 @@ def paymenttickets(request):
                 nametickets = formtickets.cleaned_data['nametickets']
                 nametickets = str(nametickets)
 
-                startofvalidityperiod = formtickets.cleaned_data['startofvalidityperiod']
-                PATTERN_OUT = "%d.%m.%Y. %H:%M"
-                startofvalidityperiod = (datetime.strftime(startofvalidityperiod, PATTERN_OUT))
-                startofvalidityperiod = str(startofvalidityperiod)
-
-                expirationdate = formtickets.cleaned_data['expirationdate']
-                PATTERN_OUT = "%d.%m.%Y. %H:%M"
+                expirationdate = formparking.cleaned_data['expirationdate']
+                PATTERN_OUT = "%d.%m.%Y."
                 expirationdate = (datetime.strftime(expirationdate, PATTERN_OUT))
                 expirationdate = str(expirationdate)
 
+                expirationtime = formparking.cleaned_data['expirationtime']
+                expirationtime = str(expirationtime)
+
+                enddateandtime = formparking.cleaned_data['enddateandtime']
+                PATTERN_OUT = "%d.%m.%Y. %H:%M"
+                enddateandtime = (datetime.strftime(enddateandtime, PATTERN_OUT))
+                enddateandtime = str(enddateandtime)
+
                 send_mail('Оплата парковки в системе оплаты парковок',
-                          "Вас приветствует система оплаты парковок. Вы оплатилиу " + nametickets + ". Срок действия начинается с " + startofvalidityperiod + " и заканчивается " + expirationdate,
+                          "Вас приветствует система оплаты парковок. Вы оплатилиу " + nametickets + ". Срок действия начинается с " + expirationdate+ " " + expirationtime + " и заканчивается " + enddateandtime,
                           'p_i.d.bukanov@mpt.ru', [formtickets.cleaned_data['email']])
             formtickets.save()
             return redirect('home')
