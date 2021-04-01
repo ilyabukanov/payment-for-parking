@@ -34,6 +34,7 @@ const datestart = document.getElementById('id_expirationdate').value;
 });
 $("#id_amountoftime").on('change', function(){
        var mintime = $("#id_amountoftime").val();
+       var price = $("#id_price").val()
        var finalprice = mintime * price
                      $("#id_price").val(finalprice)
        const datestart = document.getElementById('id_startofvalidityperiod').value;
@@ -90,6 +91,23 @@ localStorage.setItem("date",date);
 localStorage.setItem("time",time);
 });
 window.onload = function() {
+    var adress = $('select option:selected' ).text();
+$.ajax({
+    type: "GET",
+    url: "valuesubstitution",
+    data: {
+      'adress': adress,
+    },
+    dataType: "json",
+    cache: false,
+    success:function (data){
+    price = data['price']
+       $("#id_price").val(data['price'])
+       var mintime = parseInt(data['minimaltimeforpayment'])
+       document.getElementById('id_amountoftime').setAttribute('min', mintime);
+       $("#id_amountoftime").val(mintime)
+    }
+    });
     const date = localStorage.getItem("date");
     const time = localStorage.getItem("time");
 $("#id_expirationdate").val(date);

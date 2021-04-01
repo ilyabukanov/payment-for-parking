@@ -21,7 +21,6 @@ $.ajax({
          newDate.setDate(curDateNum + Number(numberofdays));
          let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMonth()+1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0'+newDate.getHours()).slice(-2) + ':' + ('0'+newDate.getMinutes()).slice(-2);
        const timee = document.getElementById('id_expirationtime').value;
-                            console.log(timee);
                           if(date && timee != "")
                  {
                           $("#id_enddateandtime").val(finalDateStr);
@@ -52,16 +51,15 @@ $("#id_expirationdate").on('change', function() {
         }
     }
 });
+
 $("#id_expirationtime").on('change', function(){
-   const date = document.getElementById('id_expirationdate').value;
+ const date = document.getElementById('id_expirationdate').value;
            const time = document.getElementById('id_expirationtime').value;
            const datetimestart = date + 'T' + time;
            let newDate = new Date(datetimestart);
            const curDateNum = newDate.getDate();
          newDate.setDate(curDateNum + Number(numberofdays));
          let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMonth()+1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0'+newDate.getHours()).slice(-2) + ':' + ('0'+newDate.getMinutes()).slice(-2);
-                            const timee = document.getElementById('id_expirationtime').value;
-                            console.log(timee)
    if(date != "") {
        $("#id_enddateandtime").val(finalDateStr);
    }
@@ -71,14 +69,15 @@ $("#button").on("click", function () {
 const time = document.getElementById('id_expirationtime').value;
 localStorage.setItem("date",date);
 localStorage.setItem("time",time);
+localStorage.setItem("numberofdays",numberofdays);
 });
 window.onload = function() {
     const date = localStorage.getItem("date");
     const time = localStorage.getItem("time");
+    numberofdays = localStorage.getItem("numberofdays");
 $("#id_expirationdate").val(date);
 $("#id_expirationtime").val(time);
 localStorage.clear();
-alert("fda");
 if(document.getElementById('exampleFormControlSelect1').value !="")
 {
         $("#id_expirationdate").prop("disabled", false);

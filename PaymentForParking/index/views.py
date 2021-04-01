@@ -85,15 +85,15 @@ def paymenttickets(request):
                 nametickets = formtickets.cleaned_data['nametickets']
                 nametickets = str(nametickets)
 
-                expirationdate = formparking.cleaned_data['expirationdate']
+                expirationdate = formtickets.cleaned_data['expirationdate']
                 PATTERN_OUT = "%d.%m.%Y."
                 expirationdate = (datetime.strftime(expirationdate, PATTERN_OUT))
                 expirationdate = str(expirationdate)
 
-                expirationtime = formparking.cleaned_data['expirationtime']
+                expirationtime = formtickets.cleaned_data['expirationtime']
                 expirationtime = str(expirationtime)
 
-                enddateandtime = formparking.cleaned_data['enddateandtime']
+                enddateandtime = formtickets.cleaned_data['enddateandtime']
                 PATTERN_OUT = "%d.%m.%Y. %H:%M"
                 enddateandtime = (datetime.strftime(enddateandtime, PATTERN_OUT))
                 enddateandtime = str(enddateandtime)

@@ -2,6 +2,7 @@ from django import forms
 from  .models import paidparking,paidseasontickets
 from django.core.exceptions import ValidationError
 import re
+from .models import Parking,paidparking,paidseasontickets,tickets
 
 class paidparkingForm(forms.ModelForm):
   class Meta:
@@ -32,6 +33,27 @@ class paidparkingForm(forms.ModelForm):
         else:
             raise ValidationError('Номер автомобиля введён не верно')
         return carnumber
+
+  def clean_price(self):
+      price = self.cleaned_data['price']
+      adress = self.cleaned_data['adress']
+      parking = Parking.objects.get(adress=adress)
+      if(price<parking.price):
+          raise forms.ValidationError('Цена за парковку указана не верно. Пожалуйста, не изменяйте цену парковки самостоятельно!!!!')
+      return price
+
+  def clean_amountoftime(self):
+      amountoftime = self.cleaned_data['amountoftime']
+      adress = self.cleaned_data['adress']
+      parking = Parking.objects.get(adress=adress)
+      minimaltimeforpayment = re.sub("\D", "", parking.minimaltimeforpayment)
+      if(str(amountoftime)<minimaltimeforpayment):
+          raise forms.ValidationError('Минимальное время для оплаты парковки указано не верно. Пожалуйста, не изменяйте минимально время для оплаты парковки самостоятельно!!!!')
+      return amountoftime
+
+
+
+
 
 class paidseasonticketsForm(forms.ModelForm):
    class Meta:
@@ -65,3 +87,12 @@ class paidseasonticketsForm(forms.ModelForm):
        else:
            raise ValidationError('Номер автомобиля введён не верно')
        return carnumber
+
+   def clean_price(self):
+       price = self.cleaned_data['price']
+       nametickets = self.cleaned_data['nametickets']
+       Tickets = tickets.objects.get(nameseasontickets=nametickets)
+       if (price<Tickets.price):
+           raise forms.ValidationError(
+               'Цена за абонемент указана не верно. Пожалуйста, не изменяйте цену абонемента самостоятельно!!!!')
+       return price
