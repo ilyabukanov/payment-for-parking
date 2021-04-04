@@ -18,10 +18,14 @@ def exit(request):
     return render(request, 'index/exit.html')
 
 def session(request):
-    request.session['phonenumber'] = 'phonenumber'
+    if request.method == 'GET':
+        phonenumber = request.GET["phonenumber"]
+    request.session['phonenumber'] = phonenumber
     return HttpResponse("yes")
 
 def enter(request):
+    if "phonenumber" in request.session:
+        return redirect('personalaccount')
     return render(request, 'index/enter.html')
 
 def pricingplans(request):
@@ -113,5 +117,8 @@ def personalaccount(request):
         paymentparking = paidparking.objects.filter(telephone=phonenumber)
         paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
     else:
-        pass
+        phonenumber = request.session['phonenumber']
+        phonenumber = str(phonenumber)
+        paymentparking = paidparking.objects.filter(telephone=phonenumber)
+        paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
     return render(request, 'index/personalaccount.html', {'paymentparking': paymentparking, 'paymenttickets': paymenttickets})

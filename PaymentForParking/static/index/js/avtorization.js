@@ -2,7 +2,8 @@ var number
 var code
 var phonenumber
 $("#exit").on("click", function () {
-  document.location.href = "http://http://10.198.1.8/exit"
+    localStorage.removeItem("phone");
+  document.location.href = "http://localhost/exit"
 });
 $("#buttonsms").on("click", function () {
 function getRandomInt(min,max){
@@ -18,13 +19,21 @@ $.ajax({
         if(phonenumber == ""){
 $("#errorMess").text("Введите номер телефона");
 }
-phonenumber = $("#phonenumber").val();
+        else{
+                 var re = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+        var valid = re.test(phonenumber);
+        if(valid){
 if(phonenumber != ""){
 alert(number)
 $("#errorMess").text("");
 $("#code").css("opacity", "1");
 $("#buttoncode").css("opacity", "1");
 }
+        }
+        else {
+                        $("#errorMess").text("Номер телефона введён не верно");
+        }
+        }
    }
     })
 });
@@ -46,7 +55,8 @@ code = $("#code").val();
     cache: false,
     success:function (data){
     if(data == "yes"){
-          document.location.href = "http://http://10.198.1.8/personalaccount?number=" + phonenumber;
+        localStorage.setItem("phone",phonenumber);
+          document.location.href = "http://localhost/personalaccount?number=" + phonenumber;
       $("#errorMess").text("");
     }
     }

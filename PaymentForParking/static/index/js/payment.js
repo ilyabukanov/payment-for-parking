@@ -1,3 +1,5 @@
+var mintime
+var price
 $("select").on('change', function(){
     $("#id_expirationdate").prop("disabled", false);
 var adress = $('select option:selected' ).text();
@@ -10,15 +12,15 @@ $.ajax({
     dataType: "json",
     cache: false,
     success:function (data){
-    price = data['price']
-       $("#id_price").val(data['price'])
-       var mintime = parseInt(data['minimaltimeforpayment'])
-       var pricevalue = $("#id_price").val()
-       var finalprice = mintime * price
+    price = data['price'];
+       $("#id_price").val(data['price']);
+       mintime = parseInt(data['minimaltimeforpayment']);
+       var pricevalue = $("#id_price").val();
+       var finalprice = mintime * price;
        document.getElementById('id_amountoftime').setAttribute('min', mintime);
-       $("#id_amountoftime").val(mintime)
+       $("#id_amountoftime").val(mintime);
 
-        $("#id_price").val(finalprice)
+        $("#id_price").val(finalprice);
 const datestart = document.getElementById('id_expirationdate').value;
            const time = document.getElementById('id_amountoftime').value;
            let newDate = new Date(datestart);
@@ -33,20 +35,9 @@ const datestart = document.getElementById('id_expirationdate').value;
     });
 });
 $("#id_amountoftime").on('change', function(){
-       var mintime = $("#id_amountoftime").val();
-       var price = $("#id_price").val()
-       var finalprice = mintime * price
-                     $("#id_price").val(finalprice)
-       const datestart = document.getElementById('id_startofvalidityperiod').value;
            const time = document.getElementById('id_amountoftime').value;
-           let newDate = new Date(datestart);
-           const curHoursNum = newDate.getHours();
-           newDate.setHours(curHoursNum + Number(time));
-           let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMonth()+1)).slice(-2) + '.' + newDate.getFullYear() + ' ' + ('0'+newDate.getHours()).slice(-2) + ':' + ('0'+newDate.getMinutes()).slice(-2);
-       if(datestart != "")
-       {
-                   $("#id_expirationdate").val(finalDateStr);
-       }
+       var finalprice = time * price;
+        $("#id_price").val(finalprice);
 });
 $("#id_expirationdate").on('change', function() {
     $("#id_expirationtime").prop("disabled", false);
@@ -110,9 +101,12 @@ $.ajax({
     });
     const date = localStorage.getItem("date");
     const time = localStorage.getItem("time");
-$("#id_expirationdate").val(date);
+    const phone = localStorage.getItem("phone");
+    $("#id_expirationdate").val(date);
 $("#id_expirationtime").val(time);
-localStorage.clear();
+$("#id_telephone").val(phone);
+localStorage.removeItem("date");
+localStorage.removeItem("time");
 if(document.getElementById('exampleFormControlSelect1').value !="")
 {
         $("#id_expirationdate").prop("disabled", false);

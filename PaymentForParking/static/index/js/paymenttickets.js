@@ -74,10 +74,13 @@ localStorage.setItem("numberofdays",numberofdays);
 window.onload = function() {
     const date = localStorage.getItem("date");
     const time = localStorage.getItem("time");
+    const phone = localStorage.getItem("phone");
     numberofdays = localStorage.getItem("numberofdays");
 $("#id_expirationdate").val(date);
 $("#id_expirationtime").val(time);
-localStorage.clear();
+$("#id_telephone").val(phone);
+localStorage.removeItem("date");
+localStorage.removeItem("time");
 if(document.getElementById('exampleFormControlSelect1').value !="")
 {
         $("#id_expirationdate").prop("disabled", false);
