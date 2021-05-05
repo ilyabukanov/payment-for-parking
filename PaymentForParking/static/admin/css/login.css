@@ -1,7 +1,7 @@
 /* LOGIN FORM */
 
 .login {
-    background: #f8f8f8;
+    background: #EDEAE5;
     height: auto;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .login #header h1 a {
-    color: #fff;
+    color: #05386B;
 }
 
 .login #content {
@@ -50,7 +50,7 @@
     line-height: 2em;
     font-size: 1em;
     clear: both;
-    color: #333;
+    color: #05386B;
 }
 
 .login .form-row #id_username, .login .form-row #id_password {

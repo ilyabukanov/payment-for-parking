@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 import re
 class Parking(models.Model):
     adress = models.CharField(max_length=150, verbose_name='Адрес')
-    workinghours = models.CharField(max_length=50, verbose_name='Время работы')
+    starttime = models.TimeField(auto_now=False, auto_now_add=False,null=True, verbose_name='Время начала работы')
+    endtime = models.TimeField(auto_now=False, auto_now_add=False,null=True,verbose_name='Время конца работы')
     minimaltimeforpayment = models.CharField(max_length=50, verbose_name='Минимальное время для оплаты')
     price = models.IntegerField(verbose_name='Цена')
     numberofavailableseats = models.IntegerField(verbose_name='Количество свободных мест', default=0)
@@ -61,6 +62,14 @@ class paidseasontickets(models.Model):
     class Meta:
         verbose_name = 'Оплаченный абонемент'
         verbose_name_plural = 'Оплаченные абонементы'
+
+class users(models.Model):
+    user_id = models.CharField(max_length=150,verbose_name='ID пользователя')
+    phonenumber = models.CharField(max_length=150,verbose_name='Номер телефона')
+
+    class Meta:
+        verbose_name = 'Пользователи telegram'
+        verbose_name_plural = 'Пользователи telegram'
 
 
 

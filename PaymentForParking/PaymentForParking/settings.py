@@ -24,7 +24,7 @@ SECRET_KEY = 'rz4l1$warkb0qw(wp6)q_drz$c6q)(9tpqpz!trapkx+40!i1$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','curvy-robin-85.loca.lt','']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'index.apps.IndexConfig',
     'debug_toolbar',
+    'django_telegram_login',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static', 'static_files'),
+)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,  'static', 'media')
 
 SESSION_COOKIE_AGE = 10*60
 
@@ -138,3 +144,7 @@ EMAIL_HOST_USER = 'p_i.d.bukanov@mpt.ru'
 EMAIL_HOST_PASSWORD = '+79152021645'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+TELEGRAM_BOT_NAME = 'login_payment_for_parking_bot'
+TELEGRAM_BOT_TOKEN = '1741265725:AAFqoGjq1CFtegYs4u2NNnZGN9tGfIKl3zs'
+TELEGRAM_LOGIN_REDIRECT_URL = 'https://ordinary-swan-20.loca.lt/personalaccount'

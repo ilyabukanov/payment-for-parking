@@ -3,7 +3,7 @@ var code
 var phonenumber
 $("#exit").on("click", function () {
     localStorage.removeItem("phone");
-  document.location.href = "http://localhost/exit"
+  document.location.href = "https://slimy-mule-52.loca.lt/exit"
 });
 $("#buttonsms").on("click", function () {
 function getRandomInt(min,max){
@@ -14,13 +14,13 @@ getRandomInt(1000, 9999)
 phonenumber = $("#phonenumber").val();
 $.ajax({
     url: "https://sms.ru/sms/send?api_id=EEB94BC4-609B-7248-EDFB-0C41307A2E8C&to="+ phonenumber +"&msg=Одноразовый код для входа в личный кабинет на сайте по оплате парковок: "+ number +"&json=1",
-    type: "POST",
+    type: "HTTP",
     error:function(error){
         if(phonenumber == ""){
 $("#errorMess").text("Введите номер телефона");
 }
         else{
-                 var re = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+                 var re = /^((\+7)+([0-9]){10})$/;
         var valid = re.test(phonenumber);
         if(valid){
 if(phonenumber != ""){
@@ -56,7 +56,7 @@ code = $("#code").val();
     success:function (data){
     if(data == "yes"){
         localStorage.setItem("phone",phonenumber);
-          document.location.href = "http://localhost/personalaccount?number=" + phonenumber;
+          document.location.href = "https://slimy-mule-52.loca.lt/personalaccount?number=" + phonenumber;
       $("#errorMess").text("");
     }
     }

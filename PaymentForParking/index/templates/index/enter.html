@@ -10,12 +10,13 @@
     </div>
     <div class="col-sm-6">
            <div class="parking">
-                 <center><h1>Вход в личный кабинет</h1></center>
+                 <center><h1>Вход в личный кабинет</h1>
+              <script async src="https://telegram.org/js/telegram-widget.js?14" data-telegram-login="payment_for_parking_bot" data-size="large" data-auth-url="https://slimy-mule-52.loca.lt/personalaccount" data-request-access="write"></script></center>
            </div>
        <center><input type="text" class="form-control" id="phonenumber" aria-describedby="emailHelp">
-           <button type="button" class="btn btn-info" id="buttonsms">Отправить SMS</button><br><br>
+           <button type="button" class="btn btn-dark" id="buttonsms">Отправить SMS</button><br><br>
    <input type="text" class="form-control" id="code" style="opacity:0" placeholder="Введите код из SMS" aria-describedby="emailHelp">
-                    <button type="button" class="btn btn-info" style="opacity:0" id="buttoncode">Войти</button>
+                    <button type="button" class="btn btn-dark" style="opacity:0" id="buttoncode">Войти</button>
                     <div id="errorMess" style="color:red"></div>
              </div>
       <div class="col-sm-3">
@@ -24,4 +25,7 @@
 {% endblock %}
            {% block js %}
 <script src="{% static 'index/js/avtorization.js' %}"></script>
+{% endblock %}
+{% block footer %}
+{% include 'index/footer.html' %}
 {% endblock %}

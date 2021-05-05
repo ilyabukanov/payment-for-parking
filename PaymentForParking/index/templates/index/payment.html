@@ -7,7 +7,7 @@
               <div class="container">
       <center>
            <h3 class="label_parking">Оплата парковки</h3>
-                 <a class="btn btn-info" href="{% url 'paymenttickets' %}" role="button">Перейти к оплате абонемента</a>
+                 <a class="btn btn-dark" href="{% url 'paymenttickets' %}" role="button">Перейти к оплате абонемента</a>
       <div class="row">
     <div class="col-sm-3">
     </div>
@@ -98,7 +98,7 @@
       </div>
   </div>
             <div id="errorMess"></div>
-           <button type="submit" class="btn btn-info" id="button">Перейти к оплате</button>
+           <button type="submit" class="btn btn-dark paymentbutton" id="button">Перейти к оплате</button>
         </div>
     </div>
      </div>
@@ -112,4 +112,7 @@
 {% endblock %}
 {% block js %}
 <script src="{% static 'index/js/payment.js' %}"></script>
+{% endblock %}
+{% block footer %}
+{% include 'index/footer.html' %}
 {% endblock %}

@@ -1,12 +1,14 @@
 body{
-    background: #2c2c2c;
+    background: #EDEAE5;
+    color: white;
+    margin: 0;
 }
 h5{
 margin-top:20px;
 margin-bottom:0px;
 }
 .label_parking{
-color:white;
+color: #05386B;
 margin-top:40px;
 margin-bottom:1px;
 }
@@ -21,7 +23,7 @@ img{
 }
 ul {list-style: none}
  ul li {
-    color: #333333;
+    color: #05386B;
          display: block;
     margin-top: 20px;
     transition: transform .20s ease;
@@ -37,18 +39,19 @@ ul {list-style: none}
      padding-right: 5px;
  }
  .parking{
-     color: #fafafa;
+     color: #05386B;
      font-size: 40px;
  }
 
   .block{
-      color: #333333;
-    background-color: #17a2b8!important;
+      color: #05386B;
+    background-color: #90CCF4;
     border-color: #ffeeba;
       padding-left: 25px;
       border-radius: 19px;
       margin-top: 30px;
       padding-top: 10px;
+      margin-bottom: 20px;
  }
   .adress{
       padding-bottom: 15px;
@@ -67,7 +70,7 @@ ul {list-style: none}
 width: 330px;
 }
 .block_payment{
-      color: #333333;
+      color: #05386B;
     background-color: #17a2b8!important;
     border-color: #ffeeba;
       padding-left: 25px;
@@ -87,3 +90,24 @@ margin-bottom:50px;
     margin-top: 20px;
     text-align: center;
 }
+.header{
+    background-color: #90CCF4;
+}
+.navbar-light .navbar-brand{
+    color: #05386B;
+}
+.paymentbutton{
+    margin-bottom: 10px;
+}
+.personalaccount{
+          color: #05386B;
+    background-color: #90CCF4;
+    border-color: #ffeeba;
+      padding-left: 25px;
+      border-radius: 19px;
+      margin-top: 30px;
+      padding-top: 10px;
+      margin-bottom: 20px;
+    padding-right: 30px;
+}
+

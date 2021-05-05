@@ -424,11 +424,11 @@ select[multiple] {
 /* FORM BUTTONS */
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
-    background: #79aec8;
+    background: #90CCF4;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    color: #fff;
+    color: #05386B;
     cursor: pointer;
 }
 
@@ -497,8 +497,8 @@ input[type=button][disabled].default {
     font-weight: 400;
     font-size: 13px;
     text-align: left;
-    background: #00acc1;
-    color: #fff;
+    background: #90CCF4;
+    color: #05386B;
 }
 
 .module caption,
@@ -813,8 +813,8 @@ table#change-history tbody th {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background: #00acc1;
-    color: black;
+    background: #90CCF4;
+    color: #05386B;
     overflow: hidden;
 }
 

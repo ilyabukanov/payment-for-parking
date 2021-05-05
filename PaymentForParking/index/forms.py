@@ -21,7 +21,7 @@ class paidparkingForm(forms.ModelForm):
       }
   def clean_telephone(self):
       telephone = self.cleaned_data['telephone']
-      if not re.match('^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$', telephone):
+      if not re.match('^((\+7)+([0-9]){10})$', telephone):
           raise forms.ValidationError('Номер телефона введён не верно')
       return telephone
 
@@ -51,6 +51,15 @@ class paidparkingForm(forms.ModelForm):
           raise forms.ValidationError('Минимальное время для оплаты парковки указано не верно. Пожалуйста, не изменяйте минимально время для оплаты парковки самостоятельно!!!!')
       return amountoftime
 
+  def clean_time(self):
+      time = self.cleaned_data['expirationtime']
+      adress = self.cleaned_data['adress']
+      parking = Parking.objects.get(adress=adress)
+      endtime = time - parking.endtime
+      if(endtime>0):
+          raise forms.ValidationError('Время выбрано не верно. Парковка не работает!!!!')
+      return time
+
 
 
 
@@ -75,7 +84,7 @@ class paidseasonticketsForm(forms.ModelForm):
    def clean_telephone(self):
        telephone = self.cleaned_data['telephone']
        # r = re.compile('^\+7|8\D*\d{3}\D*\d{3}\D*\d{2}\D*\d{2}')
-       if not re.match('^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$', telephone):
+       if not re.match('^((\+7)+([0-9]){10})$', telephone):
            raise ValidationError('Номер телефона введён не верно')
        return telephone
 

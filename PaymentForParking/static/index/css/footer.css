@@ -1,0 +1,46 @@
+footer{
+    background:#90CCF4;
+}
+.social-icons ul{
+list-style: none;
+display: flex;
+justify-content: center;
+}
+.social-icons ul li a span {
+color: #000;
+width: 45px;
+background: #fff;
+height: 40px;
+text-align: center;
+line-height: 40px;
+border-radius: 20px;
+font-size: 15px;
+margin: 0px 2px;
+border-radius: 20px;
+font-size: 30px;
+margin: 0px 2px;
+transition: 0.5s all;
+-webkit-transition: 0.5s all;
+transition: 0.5s all;
+-moz-transition: 0.5s all;
+    margin-top: 0px;
+}
+.social-icons ul li a span:hover{color:#0ccbf1;}
+.сopyright{font-size:20px;
+color:#05386B;
+}
+.social-icons ul li:nth-child(2){
+margin: 0 10px;
+}
+.copy-bottom-txt p a {
+font-size: 18px;
+color:#000;
+letter-spacing: 1px;
+transition: .4s;
+}
+.copy-bottom-txt p a:hover {
+color: #000;
+text-decoration: underline;
+padding-top: 4px;
+font-weight: 700;
+}

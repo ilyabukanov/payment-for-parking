@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import paidparkingForm,paidseasonticketsForm
 from django.template import RequestContext
-from .models import Parking,paidparking,paidseasontickets,tickets
+from .models import Parking,paidparking,paidseasontickets,tickets,users
 from django.http import JsonResponse
 from django.core.mail import send_mail
 import json
+from django.conf import settings
 from datetime import datetime
+
 
 def index(request):
     parking = Parking.objects.all()
@@ -112,13 +114,39 @@ def paymenttickets(request):
     return render(request, 'index/paymenttickets.html', {'formtickets': formtickets})
 
 def personalaccount(request):
-    if request.GET:
-        phonenumber = request.GET["number"]
-        paymentparking = paidparking.objects.filter(telephone=phonenumber)
-        paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
+    if 'id' not in request.GET:
+        pass
     else:
-        phonenumber = request.session['phonenumber']
-        phonenumber = str(phonenumber)
-        paymentparking = paidparking.objects.filter(telephone=phonenumber)
-        paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
-    return render(request, 'index/personalaccount.html', {'paymentparking': paymentparking, 'paymenttickets': paymenttickets})
+        id = request.GET["id"]
+        try:
+            user = users.objects.get(user_id=id)
+            phonenumber = user.phonenumber
+            request.session['phonenumber'] = phonenumber
+        except users.DoesNotExist:
+            return render(request, 'index/telegram.html')
+    if "phonenumber" in request.session:
+        if request.GET:
+            if 'number' not in request.GET:
+                phonenumber = request.session['phonenumber']
+                phonenumber = str(phonenumber)
+                paymentparking = paidparking.objects.filter(telephone=phonenumber)
+                paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
+            else:
+                phonenumber = "+"+request.GET["number"]
+                phonenumber = phonenumber.replace(' ','')
+                paymentparking = paidparking.objects.filter(telephone=phonenumber)
+                paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
+                return render(request, 'index/personalaccount.html',
+                              {'paymentparking': paymentparking, 'paymenttickets': paymenttickets})
+        else:
+            phonenumber = request.session['phonenumber']
+            phonenumber = str(phonenumber)
+            paymentparking = paidparking.objects.filter(telephone=phonenumber)
+            paymenttickets = paidseasontickets.objects.filter(telephone=phonenumber)
+    else:
+        return render(request, 'index/enter.html')
+    return render(request, 'index/personalaccount.html',{'paymentparking': paymentparking, 'paymenttickets': paymenttickets})
+
+
+
+
