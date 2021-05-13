@@ -4,6 +4,8 @@ import debug_toolbar
 from django.conf import settings
 from django.urls import include, path
 
+from .views import ParkingView
+
 
 urlpatterns = [
     path('', views.index, name='home'),
@@ -17,6 +19,13 @@ urlpatterns = [
     path('exit', views.exit, name='exit'),
     path('session', views.session, name='session'),
     path('__debug__/', include(debug_toolbar.urls)),
+    path('admin/statistics', views.view_func),
+    path('admin/date', views.statistics),
+    path('parking/', ParkingView.as_view()),
+    path('admin/print', views.print_func),
+    #БОТ
+    path('botparking/', views.botparking),
+    path('save_phonenumber/', views.save_phonenumber),
 ]
 
 

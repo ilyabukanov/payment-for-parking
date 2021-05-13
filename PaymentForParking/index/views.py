@@ -8,7 +8,80 @@ from django.core.mail import send_mail
 import json
 from django.conf import settings
 from datetime import datetime
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from qsstats import QuerySetStats
+from django.views.decorators.csrf import csrf_exempt,csrf_protect
+from django.db.models import Sum
+from docxtpl import DocxTemplate
+from django.http import JsonResponse
 
+import csv
+
+import os
+from django.views.decorators.csrf import csrf_exempt,csrf_protect
+
+@csrf_exempt
+def statistics(request):
+    startdate = datetime.strptime(request.POST['startdate'], '%d.%m.%Y')
+    enddate = datetime.strptime(request.POST['enddate'], '%d.%m.%Y')
+    paymentparking = paidparking.objects.filter(expirationdate__range=(startdate, enddate)).values('expirationdate').annotate(
+        Sum('price'))
+    paymentparking = paymentparking.order_by('expirationdate')
+    return JsonResponse({'result': list(paymentparking)})
+@csrf_exempt
+def print_func(request):
+
+    post_data = json.loads(request.body)
+    date = post_data.get('date', False)
+    price = post_data.get('price', False)
+    pricesum = post_data.get('pricesum', False)
+
+    #СSV файл
+    FILENAME = "Статистика по продажам.csv"
+    with open(FILENAME, "w", newline="") as file:
+        columns = ["Date","Price"]
+        writer = csv.DictWriter(file, fieldnames=columns)
+        writer.writeheader()
+        i = 0
+        a = 0
+        while i<len(date):
+            while a < len(price):
+                users = [
+                    {"Date": date[i],"Price": price[a]},
+                ]
+                writer.writerows(users)
+                i+=1
+                a+=1
+    #docx файл
+    doc = DocxTemplate('template.docx')
+
+    dates = date
+    prices = price
+
+    # Формируем список вида
+    # [{'expirationdate': '2021-04-30', 'price': 1500},
+    #  {'expirationdate': '2021-05-02', 'price': 450}, ...]
+    tbl_contents = [{'expirationdate': expirationdate, 'price': price}
+                    for expirationdate, price in zip(dates, prices)]
+
+    context = {
+        'tbl_contents': tbl_contents,
+        'finalprice': sum(prices)
+    }
+
+    doc.render(context)
+    doc.save("Статистика по продажам.docx")
+
+
+    return JsonResponse({'result': 'fsd'})
+def view_func(request):
+    return render(request, 'index/statistics.html')
+
+class ParkingView(APIView):
+    def get(self, request):
+        parking = Parking.objects.all()
+        return Response({"parking": parking})
 
 def index(request):
     parking = Parking.objects.all()
@@ -146,6 +219,30 @@ def personalaccount(request):
     else:
         return render(request, 'index/enter.html')
     return render(request, 'index/personalaccount.html',{'paymentparking': paymentparking, 'paymenttickets': paymenttickets})
+
+#Бот
+def botparking(request):
+    parking = list(Parking.objects.values())
+    return JsonResponse(parking, safe=False)
+
+def save_phonenumber(request):
+    info='yes'
+    if 'phonenumber' not in request.GET:
+        pass
+    else:
+        phonenumber = request.GET["phonenumber"]
+        phonenumber = f'+{phonenumber}'
+        phonenumber = phonenumber.replace(' ', '')
+    if 'user_id' not in request.GET:
+        pass
+    else:
+        user_id = request.GET["user_id"]
+    try:
+        user = users.objects.get(user_id=user_id)
+    except users.DoesNotExist:
+        telegram = users
+        telegram(user_id=user_id, phonenumber=phonenumber).save()
+    return JsonResponse(info, safe=False)
 
 
 

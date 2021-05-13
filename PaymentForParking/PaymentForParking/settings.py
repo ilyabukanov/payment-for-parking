@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'index.apps.IndexConfig',
     'debug_toolbar',
     'django_telegram_login',
+    'rest_framework',
+    'googlecharts',
+    'PaymentForParking'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +60,7 @@ ROOT_URLCONF = 'PaymentForParking.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
