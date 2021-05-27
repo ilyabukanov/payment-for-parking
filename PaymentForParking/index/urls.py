@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/date', views.statistics),
     path('parking/', ParkingView.as_view()),
     path('admin/print', views.print_func),
+    path('admin/video_images_from_cameras', views.video_images_from_cameras),
+    path('admin/video',views.video),
     #БОТ
     path('botparking/', views.botparking),
     path('save_phonenumber/', views.save_phonenumber),

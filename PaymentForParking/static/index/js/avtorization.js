@@ -3,7 +3,7 @@ var code
 var phonenumber
 $("#exit").on("click", function () {
     localStorage.removeItem("phone");
-  document.location.href = "https://slimy-mule-52.loca.lt/exit"
+  document.location.href = "https://demo.vidim.org/exit"
 });
 $("#buttonsms").on("click", function () {
 function getRandomInt(min,max){
@@ -56,7 +56,7 @@ code = $("#code").val();
     success:function (data){
     if(data == "yes"){
         localStorage.setItem("phone",phonenumber);
-          document.location.href = "https://slimy-mule-52.loca.lt/personalaccount?number=" + phonenumber;
+          document.location.href = "https://demo.vidim.org/personalaccount?number=" + phonenumber;
       $("#errorMess").text("");
     }
     }

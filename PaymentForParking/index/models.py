@@ -9,6 +9,7 @@ class Parking(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     numberofavailableseats = models.IntegerField(verbose_name='Количество свободных мест', default=0)
     tickets = models.ManyToManyField('tickets', blank=True, verbose_name='Абонементы')
+    videofromthecamera = models.CharField(max_length=500, blank=True, verbose_name='Видеоизображение с камеры')
 
     def __str__(self):
         return self.adress

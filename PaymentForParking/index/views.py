@@ -24,6 +24,7 @@ import csv
 import os
 from django.views.decorators.csrf import csrf_exempt,csrf_protect #Add this
 
+#Статистика по продажам
 @csrf_exempt
 def statistics(request):
     startdate = datetime.strptime(request.POST['startdate'], '%d.%m.%Y')
@@ -32,6 +33,16 @@ def statistics(request):
         Sum('price'))
     paymentparking = paymentparking.order_by('expirationdate')
     return JsonResponse({'result': list(paymentparking)})
+
+def video_images_from_cameras(request):
+    parking = Parking.objects.all()
+    return render(request,'index/video_images_from_cameras.html',{"parking": parking})
+
+def video(request):
+    adress = request.GET["adress"]
+    parking = Parking.objects.get(adress=adress)
+    return JsonResponse({'video': parking.videofromthecamera})
+
 #Формирование отчётных документов по продажам в формате WORD
 @csrf_exempt
 def print_func(request):

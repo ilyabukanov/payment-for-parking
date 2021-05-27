@@ -13,7 +13,7 @@
               <div class="block">
         <div class="adress"><center><h3>{{ item.adress }}</h3></center></div>
                   <div class="mintime"><h4>Минимальное время: {{ item.minimaltimeforpayment }}</h4></div>
-                  <div class="price"><h4>Цена: {{ item.price }} руб/час</h4></div>
+                  <div class="price"><h4>Цена,руб: {{ item.price }} руб/час</h4></div>
                   <center><h3>Абонементы</h3></center>
                    {% for v in item.tickets.all %}
                        <div class="adresstickets"><h4>Адрес парковки: {{ item.adress }}</h4></div>

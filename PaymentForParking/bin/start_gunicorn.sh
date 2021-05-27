@@ -1,4 +1,4 @@
 #!/bin/bash
-source /mnt/c/WEB/codepython/PaymentForParking/env/bin/activate
-exec gunicorn  -c "/mnt/c/WEB/codepython/PaymentForParking/PaymentForParking/gunicorn_config.py" PaymentForParking.wsgi
+source /home/ibukanov/code/payment-for-parking/PaymentForParking/env/bin/activate
+exec gunicorn  -c "/home/ibukanov/code/payment-for-parking/PaymentForParking/PaymentForParking/gunicorn_config.py" PaymentForParking.wsgi
 

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Parking,tickets,paidparking,paidseasontickets,users
 
 class IndexAdmin(admin.ModelAdmin):
-    list_display = ('adress','starttime','endtime','minimaltimeforpayment', 'price', 'numberofavailableseats', 'Абонементы')
+    list_display = ('adress','starttime','endtime','minimaltimeforpayment', 'price', 'numberofavailableseats','videofromthecamera', 'Абонементы')
     list_display_links = ('adress',)
     search_fields = ('adress',)
 
