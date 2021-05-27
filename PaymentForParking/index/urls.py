@@ -26,6 +26,13 @@ urlpatterns = [
     #БОТ
     path('botparking/', views.botparking),
     path('save_phonenumber/', views.save_phonenumber),
+    path('minimum_time_for_payment/',views.minimum_time_for_payment),
+    path('adress_parking/', views.adress_parking),
+    path('season_tickets/',views.season_tickets),
+    path('price_tickets/', views.price_tickets),
+    path('number_of_days_tickets/', views.number_of_days_tickets),
+    path('save_payment_parking/', views.save_payment_parking),
+    path('save_payment_tickets/',views.save_payment_tickets)
 ]
 
 

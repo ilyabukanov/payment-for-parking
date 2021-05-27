@@ -2,6 +2,7 @@ var mintime
 var price
 $("select").on('change', function(){
     $("#id_expirationdate").prop("disabled", false);
+        $("#id_amountoftime").prop("disabled", false);
 var adress = $('select option:selected' ).text();
 $.ajax({
     type: "GET",

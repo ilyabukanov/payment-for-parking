@@ -13,7 +13,7 @@ function getRandomInt(min,max){
 getRandomInt(1000, 9999)
 phonenumber = $("#phonenumber").val();
 $.ajax({
-    url: "https://sms.ru/sms/send?api_id=EEB94BC4-609B-7248-EDFB-0C41307A2E8C&to="+ phonenumber +"&msg=Одноразовый код для входа в личный кабинет на сайте по оплате парковок: "+ number +"&json=1",
+    url: "https://sms.ru/sms/send?api_id=80645DBB-95F9-5E9A-9AF7-259B22D14168&to="+ phonenumber +"&msg=Одноразовый код для входа в личный кабинет на сайте оплаты услуг парковочных пространств: "+ number +"&json=1",
     type: "HTTP",
     error:function(error){
         if(phonenumber == ""){

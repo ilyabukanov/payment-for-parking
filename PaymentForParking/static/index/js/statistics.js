@@ -2,13 +2,12 @@ var sumprice = 0
 var expirationdates = [];
 var prices = [];
 $("#enddate").on('change', function () {
-     $("#buttonword").removeAttr("disabled");
+     $("#email").removeAttr("disabled");
     const startdate = document.getElementById('startdate').value;
     let newDateStart = new Date(startdate);
     const curHoursNumStart = newDateStart.getHours();
     newDateStart.setHours(curHoursNumStart + Number(0));
     let finalDateStrStart = ('0' + newDateStart.getDate()).slice(-2) + '.' + ('0' + (newDateStart.getMonth() + 1)).slice(-2) + '.' + newDateStart.getFullYear()
-
     const enddate = document.getElementById('enddate').value;
     let newDateEnd = new Date(enddate);
     const curHoursNumEnd = newDateEnd.getHours();
@@ -80,25 +79,52 @@ $("#enddate").on('change', function () {
     });
 });
 $("#buttonword").on("click", function () {
+    email = $("#email").val();
+    if (email == "") {
+        $("#error").text("Введите email адрес");
+    } else {
+        var re = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+        var valid = re.test(email);
+        if (valid) {
+            $("#error").text("");
+                var pricesum = sumprice;
+    var date = expirationdates;
+    var price = prices;
+    const startdate = document.getElementById('startdate').value;
+    const enddate = document.getElementById('enddate').value;
+    $.ajax({
+        type: "POST",
+        url: "print",
+        data: JSON.stringify({
+            'pricesum': pricesum,
+            'date': date,
+            'price': price,
+            'startdate': startdate,
+            'enddate': enddate,
+            'email': email,
+        }),
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        }
+    });
+
+        } else {
+            $("#error").text("Email адрес введён не верно");
+        }
+    }
     $.ajax({
         url: "http://localhost/",
         type: "HTTP",
         error: function (error) {
         }
     });
-    var pricesum  = sumprice;
-    var date = expirationdates;
-    var price = prices;
-        $.ajax({
-        type: "POST",
-        url: "print",
-        data: JSON.stringify({'pricesum': pricesum, 'date': date, 'price': price}),
-        dataType: "json",
-        cache: false,
-        success: function (data) {
-        }
-    });
 });
 $("#startdate").on('change', function () {
     $("#enddate").prop("disabled", false);
 });
+
+$("#email").on('change', function () {
+         $("#buttonword").removeAttr("disabled");
+});
+

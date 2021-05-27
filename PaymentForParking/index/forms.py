@@ -11,7 +11,7 @@ class paidparkingForm(forms.ModelForm):
       widgets = {
           'adress': forms.Select(attrs={"class": "form-control form", "id": "exampleFormControlSelect1"}),
           'carnumber': forms.TextInput(attrs={"class": "form-control form-control-lg form"}),
-          'amountoftime': forms.NumberInput(attrs={"class": "number form-control form-control-lg form"}),
+          'amountoftime': forms.NumberInput(attrs={"class": "number form-control form-control-lg form", "disabled": 1}),
           'price': forms.NumberInput(attrs={"class": "form-control form-control-lg form", "readonly": 0}),
           'email': forms.EmailInput(attrs={"class": "form-control form-control-lg form"}),
           'telephone': forms.TextInput(attrs={"class": "form-control form-control-lg form"}),
