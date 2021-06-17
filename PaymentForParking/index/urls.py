@@ -5,8 +5,7 @@ from django.conf import settings
 from django.urls import include, path
 
 from .views import ParkingView
-
-
+from django.views.generic import RedirectView
 urlpatterns = [
     path('', views.index, name='home'),
     path('authorization',views.enter, name='authorization'),
@@ -25,6 +24,7 @@ urlpatterns = [
     path('admin/print', views.print_func),
     path('admin/video_images_from_cameras', views.video_images_from_cameras),
     path('admin/video',views.video),
+    path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     #БОТ
     path('botparking/', views.botparking),
     path('save_phonenumber/', views.save_phonenumber),
@@ -34,7 +34,9 @@ urlpatterns = [
     path('price_tickets/', views.price_tickets),
     path('number_of_days_tickets/', views.number_of_days_tickets),
     path('save_payment_parking/', views.save_payment_parking),
+    path('start_time_end_time/',views.start_time_end_time),
     path('save_payment_tickets/',views.save_payment_tickets)
 ]
+
 
 

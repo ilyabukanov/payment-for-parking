@@ -1,3 +1,4 @@
+var video
 $("select").on('change', function(){
      var adress = $("#adress").val();
      $.ajax({
@@ -9,10 +10,10 @@ $("select").on('change', function(){
     dataType: "json",
     cache: false,
     success:function (data) {
-          var video = data['video'];
-          $('#video').attr('src', video);
-          //var b = document.getElementById(video);
-          //b.setAttribute("src", "https://www.youtube.com/watch?v=OcOLyAcmiyM");
+          video = data['video'];
+                     $("#video").css("opacity", "1");
+          $('#video').attr('href', video);
     }
     })
 });
+

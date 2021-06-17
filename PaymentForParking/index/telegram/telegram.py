@@ -9,10 +9,15 @@ import ast
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 import re
 from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import time
 
 global chat_id
 
 global numberofdays
+
+
+
 
 
 
@@ -34,8 +39,7 @@ keyboardhour = InlineKeyboardMarkup()
 keyboardhour.row_width = 3
 zero = types.InlineKeyboardButton(text='00', callback_data=f"hour_{'00'}")
 one = types.InlineKeyboardButton(text='01', callback_data=f"hour_{'01'}")
-two = types.InlineKeyboardButton(text='02',
-                                    callback_data=f"hour_{'02'}")
+two = types.InlineKeyboardButton(text='02', callback_data=f"hour_{'02'}")
 three = types.InlineKeyboardButton(text='03',callback_data=f"hour_{'03'}")
 four = types.InlineKeyboardButton(text='04',callback_data=f"hour_{'04'}")
 five = types.InlineKeyboardButton(text='05',callback_data=f"hour_{'05'}")
@@ -245,7 +249,7 @@ payment = types.InlineKeyboardButton(text='✅ Оплатить', callback_data=
                                     callback_data='сancel')
 keyboard_payment_tickets_final.add(payment, сancel)
 
-
+#Обработки нажатия на кнопки
 @bot.message_handler(content_types=['text'])
 def handler(message):
    if message.text.lower() == '/start':
@@ -312,9 +316,20 @@ def phone_number(message):
         date = datetime.strptime(str(new_date), PATTERN_IN)
         global new_date_payment_parking
         new_date_payment_parking = datetime.strftime(date, PATTERN_OUT)
-        global payment_final
-        payment_final = bot.send_message(cid,
-                     f'Оплата парковки\nАдрес: {res_str}\nНомер автомобиля: {carnumber}\nКоличество времени: {minimaltimeforpayment} Час(а)(ов)\nЦена: {sum_price} Рублей\nНомер телефона: {parking_phone_number}\nДата начала срока действия: {date_parking}\nВремя начала срока действия: {time_parking}\nДата и время окончания срока действия: {new_date_payment_parking}', reply_markup=keyboard_payment_parking_final)
+        PATTERN_IN = "%d.%m.%Y %H:%M"
+        PATTERN_OUT = "%H:%M"
+        date1 = datetime.strptime(str(new_date_payment_parking ), PATTERN_IN)
+        date2 = datetime.strftime(date1, PATTERN_OUT)
+        if start_time < date2 < end_time:
+            global payment_final
+            payment_final = bot.send_message(cid,
+                                             f'Оплата парковки\nАдрес: {res_str}\nНомер автомобиля: {carnumber}\nКоличество времени: {minimaltimeforpayment} Час(а)(ов)\nЦена: {sum_price} Рублей\nНомер телефона: {parking_phone_number}\nДата начала срока действия: {date_parking}\nВремя начала срока действия: {time_parking}\nДата и время окончания срока действия: {new_date_payment_parking}',
+                                             reply_markup=keyboard_payment_parking_final)
+        else:
+            bot.send_message(cid, "Выбрано большое количество времени. Время окончания срока дейтсвия оплаты не совпадает с временем работы парковки.")
+            bot.send_message(cid, 'Оплата:',
+                             reply_markup=keyboardpayment)
+
 
 #Вывод всех данных оплаты абонемента
 def phone_number_tickets(message):
@@ -374,11 +389,12 @@ def contact(message):
         global phonenumber
         phonenumber= str(message.contact.phone_number)
         user_id = str(message.contact.user_id)
-        response = requests.get(f'http://localhost/save_phonenumber?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&phonenumber={phonenumber}&user_id={user_id}')
+        response = requests.get(f'http://localhost/save_phonenumber?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&'
+                                f'phonenumber={phonenumber}&user_id={user_id}')
 
 #Функция для каллендаря парковок
 @bot.callback_query_handler(func=DetailedTelegramCalendar.func(calendar_id=1))
-def cal(c):
+def cal_parking(c):
     result, key, step = DetailedTelegramCalendar(calendar_id=1).process(c.data)
     if not result and key:
         bot.edit_message_text(f"Выберите дату начала срока действия",
@@ -400,7 +416,7 @@ def cal(c):
         #bot.register_next_step_handler(timestart, expiration_time)
 #Функция для каллендаря с абонементами
 @bot.callback_query_handler(func=DetailedTelegramCalendar.func(calendar_id=2))
-def cal(c):
+def cal_titckets(c):
     result, key, step = DetailedTelegramCalendar(calendar_id=2).process(c.data)
     if not result and key:
         bot.edit_message_text(f"Выберите дату начала срока действия",
@@ -424,12 +440,18 @@ def cal(c):
 def minimal_time_for_payment(message):
     global minimaltimeforpayment
     minimaltimeforpayment = message.text
+    minimaltimeforpayment = ''.join(re.findall('\d', minimaltimeforpayment))
     bot.delete_message(chat_id, time.id)
-    calendar, step = DetailedTelegramCalendar(calendar_id=1).build()
-    #bot.send_message(message.chat.id,
-    #                     f"Выберите {LSTEP[step]}",
-    #                     reply_markup=calendar)
-    bot.send_message(message.chat.id, "Выберите дату", reply_markup=calendar)
+    print(minimaltime)
+    print(minimaltimeforpayment)
+    if minimaltimeforpayment<minimaltime:
+        bot.send_message(message.chat.id, "Минимальное время для оплаты указано не верно. Оно меньше минимального времени, которое указано в тарифах.")
+        bot.send_message(message.chat.id, 'Оплата:',
+                         reply_markup=keyboardpayment)
+    else:
+        calendar, step = DetailedTelegramCalendar(calendar_id=1).build()
+        bot.send_message(message.chat.id, "Выберите дату", reply_markup=calendar)
+
 
 #Обработка введённых данных пользователя при указании номера автомобиля при оплате парковки
 def car_number(message):
@@ -441,6 +463,9 @@ def car_number(message):
         response = requests.get(f'http://localhost/minimum_time_for_payment?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&adress={res_str}')
         data = response.json()
         minimaltimeforpayment = data['minimaltimeforpayment']
+        global minimaltime
+        minimaltime = data['minimaltimeforpayment']
+        minimaltime = ''.join(re.findall('\d', minimaltime))
         global price
         price = data['price']
         global time
@@ -454,7 +479,7 @@ def car_number(message):
 
 #Обработчик нажатия кнопок с минутами при оплате абонементов
 @bot.callback_query_handler(lambda query: query.data.startswith("ticketsminutes_"))
-def ans(query):
+def tickets_minutes(query):
     str = query.data
     global time_minutes_tickets
     time_minutes_tickets = str.replace('ticketsminutes_', '')
@@ -465,7 +490,7 @@ def ans(query):
 
 #Обработчик нажатия кнопок с часами при оплате абонементов
 @bot.callback_query_handler(lambda query: query.data.startswith("ticketshour_"))
-def ans(query):
+def tickets_hour(query):
     str = query.data
     global time_hour_tickets
     time_hour_tickets = str.replace('ticketshour_', '')
@@ -476,18 +501,33 @@ def ans(query):
 
 #Обработчик нажатия кнопок с минутами при оплате парковок
 @bot.callback_query_handler(lambda query: query.data.startswith("minutes_"))
-def ans(query):
+def minutes_parking(query):
     str = query.data
     global time_minutes
     time_minutes = str.replace('minutes_', '')
     bot.delete_message(cid, minutes.id)
-    global phonenumber
-    phonenumber = bot.send_message(cid, 'Введите номер телефона (в формате +7).')
-    bot.register_next_step_handler(phonenumber, phone_number)
+    time_parking = time_hour + ":" + time_minutes
+    response = requests.get(
+        f'http://localhost/start_time_end_time?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&adress={res_str}')
+    data = response.json()
+    global start_time
+    start_time = data['start_time']
+    global end_time
+    end_time = data['end_time']
+    if start_time < time_parking < end_time:
+        global phonenumber
+        phonenumber = bot.send_message(cid, 'Введите номер телефона (в формате +7).')
+        bot.register_next_step_handler(phonenumber, phone_number)
+    else:
+        bot.send_message(cid, "Время выбрано не верно. Парковка не работает.")
+        bot.send_message(cid, 'Оплата:',
+                         reply_markup=keyboardpayment)
+
+
 
 #Обработчик нажатия кнопок с часами при оплате парковок
 @bot.callback_query_handler(lambda query: query.data.startswith("hour_"))
-def ans(query):
+def hour_parking(query):
     str = query.data
     global time_hour
     time_hour = str.replace('hour_', '')
@@ -501,7 +541,7 @@ def ans(query):
 
 #Обработчик нажатия кнопок с адресами
 @bot.callback_query_handler(lambda query: query.data.startswith("address_"))
-def ans(query):
+def adress_parking(query):
     global chat_id
     chat_id = query.message.chat.id
     str = query.data
@@ -514,7 +554,7 @@ def ans(query):
 
 #Обработчик нажатия кнопки удалить при оплате
 @bot.callback_query_handler(lambda query: query.data.startswith("сancel"))
-def ans(query):
+def cancel_parking(query):
     bot.delete_message(cid, payment_final.id)
     bot.send_message(cid,"Вы успешно отменили оплату")
 
@@ -541,7 +581,7 @@ def car_number_tickets(message):
 
 #Обработчик нажатия кнопок с наименованием абонемента
 @bot.callback_query_handler(lambda query: query.data.startswith("res_str"))
-def ans(query):
+def name_tickets(query):
     global chat_id_tickets
     chat_id_tickets = query.message.chat.id
     str = query.data
@@ -554,13 +594,13 @@ def ans(query):
 
 #Обработчик нажатия кнопки оплаты при оплате парковок
 @bot.callback_query_handler(lambda query: query.data.startswith("payment_parking_final"))
-def ans(query):
+def payment_parking(query):
     response = requests.get(
         f'http://localhost/save_payment_parking?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&adress={res_str}&car_number={carnumber}&amount_of_time={minimaltimeforpayment}&price={sum_price}&telephone={parking_phone_number}&date_time_paid_parking={date_parking}&expiration_time={time_parking}&end_date_and_time={new_date_payment_parking}')
 
 #Обработчик нажатия кнопки оплаты при оплате абонементов
 @bot.callback_query_handler(lambda query: query.data.startswith("payment_tickets_final"))
-def ans(query):
+def payment_tickets(query):
     response = requests.get(f'http://localhost/save_payment_tickets?token=162575CVE-17T2-9D1Z-5NT4-791Z58E14168&nametickets={res_str_tickets}&car_number_tickets={carnumber_tickets}&price_tickets={price_tickets}&telephone={tickets_phone_number}&date_tickets={date_tickets}&time_tickets={time_tickets}&new_date_tickets={new_date_tickets}')
 
 

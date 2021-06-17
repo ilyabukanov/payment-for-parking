@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="{% static 'index/css/index.css' %}">
     <link rel="stylesheet" href="{% static 'index/css/footer.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'index/img/parking-car.svg' %}"/>
     <style>
            html {
         height: 100%;
@@ -26,7 +27,7 @@
 <body>
 <header>
 <nav class="navbar navbar-expand-lg navbar-light header">
-  <img src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
+  <img class="image" src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
   <a class="navbar-brand logo" href="{% url 'home' %}">Парковочные пространства</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -105,7 +106,7 @@
 <body>
 <header>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
-  <img src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
+  <img class="image" src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
   <a class="navbar-brand logo" href="#">Оплата парковок</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

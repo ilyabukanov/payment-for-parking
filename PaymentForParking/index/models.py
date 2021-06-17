@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 import re
+#Модель парковки
 class Parking(models.Model):
     adress = models.CharField(max_length=150, verbose_name='Адрес')
     starttime = models.TimeField(auto_now=False, auto_now_add=False,null=True, verbose_name='Время начала работы')
@@ -18,6 +19,7 @@ class Parking(models.Model):
         verbose_name = 'Парковка'
         verbose_name_plural = 'Парковки'
 
+#Модель абонемента
 class tickets(models.Model):
             nameseasontickets = models.CharField(max_length=150, db_index=True, verbose_name='Наименование')
             numberofdays = models.CharField(max_length=50, verbose_name='Количество дней')
@@ -31,7 +33,7 @@ class tickets(models.Model):
                 verbose_name = 'Абонемент'
                 verbose_name_plural = 'Абонементы'
 
-
+#Модель оплаченной парковки
 class paidparking(models.Model):
     adress = models.ForeignKey(Parking, on_delete=models.SET_NULL, null=True, verbose_name='Адрес парковки')
     carnumber = models.CharField(max_length=150,verbose_name='Номер автомобиля')
@@ -49,6 +51,7 @@ class paidparking(models.Model):
         verbose_name = 'Оплаченная парковка'
         verbose_name_plural = 'Оплаченные парковки'
 
+#Модель оплаченного абонемента
 class paidseasontickets(models.Model):
     nametickets = models.ForeignKey(tickets, on_delete=models.SET_NULL, null=True, verbose_name='Наименование абонемента')
     carnumber = models.CharField(max_length=150,verbose_name='Номер автомобиля')
@@ -64,6 +67,7 @@ class paidseasontickets(models.Model):
         verbose_name = 'Оплаченный абонемент'
         verbose_name_plural = 'Оплаченные абонементы'
 
+#Модель пользователей telegram
 class users(models.Model):
     user_id = models.CharField(max_length=150,verbose_name='ID пользователя')
     phonenumber = models.CharField(max_length=150,verbose_name='Номер телефона')

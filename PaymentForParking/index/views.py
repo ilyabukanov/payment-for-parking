@@ -34,10 +34,12 @@ def statistics(request):
     paymentparking = paymentparking.order_by('expirationdate')
     return JsonResponse({'result': list(paymentparking)})
 
+#Отображение шаблона видеозображения
 def video_images_from_cameras(request):
     parking = Parking.objects.all()
     return render(request,'index/video_images_from_cameras.html',{"parking": parking})
 
+#Получени ссылки на видеоизображение
 def video(request):
     adress = request.GET["adress"]
     parking = Parking.objects.get(adress=adress)
@@ -58,10 +60,8 @@ def print_func(request):
 
     #docx файл
     doc = DocxTemplate('template.docx')
-
     dates = date
     prices = price
-
     tbl_contents = [{'expirationdate': expirationdate, 'price': price}
                     for expirationdate, price in zip(dates, prices)]
     PATTERN_IN = "%Y-%m-%d"
@@ -70,19 +70,17 @@ def print_func(request):
     new_date_start = datetime.strftime(date_start, PATTERN_OUT)
     date_end = datetime.strptime(str(enddate), PATTERN_IN)
     new_date_end = datetime.strftime(date_end, PATTERN_OUT)
-
     context = {
         'tbl_contents': tbl_contents,
         'finalprice': sum(prices),
         'startdate': new_date_start,
         'enddate': new_date_end
     }
-
     doc.render(context)
     file_io = BytesIO()
     doc.save(file_io)
-
-    email = EmailMessage(subject="Отчётный документ по продажам", body=f"Отчётный документ по продажам с {new_date_start} по {new_date_end}", from_email="p_i.d.bukanov@mpt.ru",
+    email = EmailMessage(subject="Отчётный документ по продажам", body=f"Отчётный документ по продажам с "
+    f"{new_date_start} по {new_date_end}", from_email="p_i.d.bukanov@mpt.ru",
                          to=[email_adres])
     email.attach("Статистика по продажам.docx", file_io.getvalue(),
                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -90,38 +88,53 @@ def print_func(request):
 
 
     return JsonResponse({'result': 'fsd'})
+
+#Отображение шаблона со статистикой
 @csrf_exempt
 def view_func(request):
     return render(request, 'index/statistics.html')
 
+#Получение объектов парковки
 class ParkingView(APIView):
     def get(self, request):
         parking = Parking.objects.all()
         return Response({"parking": parking})
+
+#Отображение шаблона главной со страницей
 @csrf_exempt
 def index(request):
     parking = Parking.objects.all()
     return render(request, 'index/index.html', {'parking': parking})
+
+#Выход из личного кабинета
 @csrf_exempt
 def exit(request):
     if "phonenumber" in request.session:
         del request.session['phonenumber']
     return render(request, 'index/exit.html')
+
+#Работа с сессией
 @csrf_exempt
 def session(request):
     if request.method == 'GET':
         phonenumber = request.GET["phonenumber"]
     request.session['phonenumber'] = phonenumber
     return HttpResponse("yes")
+
+#Вход в личный кабинет
 @csrf_exempt
 def enter(request):
     if "phonenumber" in request.session:
         return redirect('personalaccount')
     return render(request, 'index/enter.html')
+
+#Отображение шаблона с тарифами
 @csrf_exempt
 def pricingplans(request):
     parking = Parking.objects.all()
     return render(request, 'index/pricingplans.html',  {'parking': parking})
+
+#Оплата парковки
 @csrf_exempt
 def payment(request):
     if request.method == 'POST':
@@ -153,15 +166,23 @@ def payment(request):
     else:
         formparking = paidparkingForm()
     return render(request, 'index/payment.html', {'formparking': formparking})
+
+#Получение цены и минимального времени парковки
 @csrf_exempt
 def valuesubstitution(request):
     if request.method == 'GET':
         adress = request.GET["adress"]
-        parking = Parking.objects.get(adress=adress)
-        return JsonResponse({'price': parking.price, 'minimaltimeforpayment': parking.minimaltimeforpayment})
+        try:
+            parking = Parking.objects.get(adress=adress)
+            return JsonResponse({'price': parking.price, 'minimaltimeforpayment': parking.minimaltimeforpayment})
+        except Parking.DoesNotExist:
+            pass
     else:
         pass
+    return HttpResponse("Записи с данным адресом не найдена")
 @csrf_exempt
+
+#Получение цены абонемента
 def seasonticketprice(request):
     if request.method == 'GET':
         nametickets = request.GET["nametickets"]
@@ -169,6 +190,8 @@ def seasonticketprice(request):
         return JsonResponse({'price': seasontickets.price, 'numberofdays': seasontickets.numberofdays})
     else:
         pass
+
+#Оплата абонементов
 @csrf_exempt
 def paymenttickets(request):
     if request.method == 'POST':
@@ -201,6 +224,8 @@ def paymenttickets(request):
     else:
         formtickets = paidseasonticketsForm()
     return render(request, 'index/paymenttickets.html', {'formtickets': formtickets})
+
+#Личный кабинет
 @csrf_exempt
 def personalaccount(request):
     if 'id' not in request.GET:
@@ -326,6 +351,7 @@ def number_of_days_tickets(request):
             ticketss = tickets.objects.get(nameseasontickets=name_tickets)
             return JsonResponse({'number_of_days': ticketss.numberofdays})
 
+#Сохранение оплаченной парковки
 @csrf_exempt
 def save_payment_parking(request):
     token_bot = request.GET["token"]
@@ -354,6 +380,8 @@ def save_payment_parking(request):
 
     save_payment_parking = paidparking
     save_payment_parking(adress=addr,carnumber=carnumber,amountoftime=amountoftime,price=price,telephone=telephone,expirationdate=new_expirationdate,expirationtime=expirationtime,enddateandtime=new_expirationdate_enddateandtime).save()
+
+#Сохранение оплаченного абонемента
 @csrf_exempt
 def save_payment_tickets(request):
     token_bot = request.GET["token"]
@@ -378,6 +406,18 @@ def save_payment_tickets(request):
         new_expirationdate_enddateandtime = datetime.strftime(date_expirationdate_enddateandtime, PATTERN_OUT_enddateandtime)
         save_payment_tickets = paidseasontickets
         save_payment_tickets(nametickets=nameseasontickets,carnumber=carnumber,price=price, telephone=telephone, expirationdate=new_expirationdate,expirationtime=expirationtime,enddateandtime= new_expirationdate_enddateandtime).save()
+
+#Получение времени начала и окончания работы парковки
+@csrf_exempt
+def start_time_end_time(request):
+    token_bot = request.GET["token"]
+    if (token_bot == token):
+        adress = request.GET["adress"]
+        parking = Parking.objects.get(adress=adress)
+        return JsonResponse({'start_time': parking.starttime, 'end_time': parking.endtime})
+
+
+
 
 
 

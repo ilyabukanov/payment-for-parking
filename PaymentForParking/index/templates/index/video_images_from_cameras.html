@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="{% static 'index/css/index.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'index/img/parking-car.svg' %}"/>
+    <script type="text/javascript" src="https://flashphoner.com/downloads/builds/flashphoner_client/wcs_api-2.0/current/flashphoner.js"></script>
     <style>
         body {
             background: #EDEAE5;
@@ -39,10 +41,10 @@
         }
     </style>
 </head>
-<body>
+<body style="margin: 0px;height: 100%">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light header">
-        <img src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
+        <img class="image" src="{% static 'index/img/parking-car.svg' %}" alt="Лого">
         <a class="navbar-brand logo logoheader" href="{% url 'home' %}">Парковочные пространства</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +68,7 @@
                 <option>{{ item.adress }}</option>
                         {% endfor %}
             </select>
-                    <video id="video"></video>
+    <img style="-webkit-user-select: none;margin: auto;background-color: hsl(0, 0%, 25%);" src="http://10.201.1.50:555/C6nMatOb?container=mjpeg&amp;stream=main" width="375" height="212">
     </center>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

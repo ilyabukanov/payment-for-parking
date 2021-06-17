@@ -1,8 +1,9 @@
 var mintime
 var price
+//Выбор адреса парковки
 $("select").on('change', function(){
     $("#id_expirationdate").prop("disabled", false);
-        $("#id_amountoftime").prop("disabled", false);
+    $("#id_amountoftime").prop("disabled", false);
 var adress = $('select option:selected' ).text();
 $.ajax({
     type: "GET",
@@ -35,11 +36,15 @@ const datestart = document.getElementById('id_expirationdate').value;
     }
     });
 });
+
+//Изменение количества времени для оплаты
 $("#id_amountoftime").on('change', function(){
            const time = document.getElementById('id_amountoftime').value;
        var finalprice = time * price;
         $("#id_price").val(finalprice);
 });
+
+//Изменение даты начала срока действия оплаты
 $("#id_expirationdate").on('change', function() {
     $("#id_expirationtime").prop("disabled", false);
     if (document.getElementById('id_expirationtime').value == "")
@@ -61,6 +66,8 @@ let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMo
    }
     }
 });
+
+//Изменение времени начала срока действия оплаты
 $("#id_expirationtime").on('change', function(){
 const date = document.getElementById('id_expirationdate').value;
 const time = document.getElementById('id_expirationtime').value;
@@ -76,6 +83,7 @@ let finalDateStr = ('0'+newDate.getDate()).slice(-2) + '.' + ('0'+(newDate.getMo
    }
 });
 
+//Нажатие на кнопку "Перейти к оплате"
 $("#button").on("click", function () {
     const date = document.getElementById('id_expirationdate').value;
 const time = document.getElementById('id_expirationtime').value;
@@ -83,6 +91,9 @@ localStorage.setItem("date",date);
 localStorage.setItem("time",time);
 });
 window.onload = function() {
+    $("#id_amountoftime").prop("disabled", false);
+    $("#id_expirationdate").prop("disabled", false);
+    $("#id_expirationtime").prop("disabled", false);
     var adress = $('select option:selected' ).text();
 $.ajax({
     type: "GET",
@@ -94,7 +105,9 @@ $.ajax({
     cache: false,
     success:function (data){
     price = data['price']
-       $("#id_price").val(data['price'])
+         const time = document.getElementById('id_amountoftime').value;
+    var finalprice = price * time
+       $("#id_price").val(finalprice)
        var mintime = parseInt(data['minimaltimeforpayment'])
        document.getElementById('id_amountoftime').setAttribute('min', mintime);
        $("#id_amountoftime").val(mintime)
